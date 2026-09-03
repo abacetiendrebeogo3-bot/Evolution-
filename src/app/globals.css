@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 11 11 14;
+    --sidebar: 14 14 20;
+    --card: 19 19 27;
+  }
+
+  body {
+    @apply bg-background text-gray-100 font-sans antialiased selection:bg-gold-500/30 selection:text-gold-400;
+    background-color: #0B0B0E;
+    color: #E2E8F0;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom dark scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0E0E14;
+}
+::-webkit-scrollbar-thumb {
+  background: #252536;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #383852;
+}
+
+/* Custom Noise Overlay */
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+/* Gold Gradient Text */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #FDE047 0%, #E5A93C 50%, #B48427 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Flame Gradient Text */
+.text-flame-gradient {
+  background: linear-gradient(135deg, #F97316 0%, #E8634A 50%, #DC2626 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Subtle card border glow on hover */
+.glow-card {
+  transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.glow-card:hover {
+  border-color: rgba(229, 169, 60, 0.3);
+  box-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.5), 0 0 20px -5px rgba(229, 169, 60, 0.15);
+  transform: translateY(-2px);
+}
