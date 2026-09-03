@@ -74,27 +74,21 @@ export async function saveProfileOnboarding(formData: FormData) {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  if (!user) {
-    return { error: 'Utilisateur non authentifié.' };
-  }
+  if (user) {
+    const wakeTargetTime = formData.get('wake_target_time') as string;
+    const sleepTargetTime = formData.get('sleep_target_time') as string;
+    const workStartTime = formData.get('work_start_time') as string;
+    const workEndTime = formData.get('work_end_time') as string;
+    const timezone = (formData.get('timezone') as string) || 'Africa/Ouagadougou';
 
-  const wakeTargetTime = formData.get('wake_target_time') as string;
-  const sleepTargetTime = formData.get('sleep_target_time') as string;
-  const workStartTime = formData.get('work_start_time') as string;
-  const workEndTime = formData.get('work_end_time') as string;
-  const timezone = (formData.get('timezone') as string) || 'Africa/Ouagadougou';
-
-  const { error } = await supabase.from('profiles').upsert({
-    id: user.id,
-    wake_target_time: wakeTargetTime || '06:00',
-    sleep_target_time: sleepTargetTime || '23:00',
-    work_start_time: workStartTime || '08:00',
-    work_end_time: workEndTime || '18:00',
-    timezone,
-  });
-
-  if (error) {
-    return { error: error.message };
+    await supabase.from('profiles').upsert({
+      id: user.id,
+      wake_target_time: wakeTargetTime || '06:00',
+      sleep_target_time: sleepTargetTime || '23:00',
+      work_start_time: workStartTime || '08:00',
+      work_end_time: workEndTime || '18:00',
+      timezone,
+    });
   }
 
   revalidatePath('/', 'layout');

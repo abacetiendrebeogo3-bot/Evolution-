@@ -1,10 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Compass, Clock, Sunrise, Sunset, Briefcase, ArrowRight, Sparkles, Check } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Compass, Clock, Sunrise, Sunset, Briefcase, ArrowRight, Sparkles } from 'lucide-react';
 import { saveProfileOnboarding } from '../../actions/auth';
 
 export default function OnboardingPage() {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [wakeTime, setWakeTime] = useState('06:00');
   const [sleepTime, setSleepTime] = useState('23:00');
@@ -25,8 +27,8 @@ export default function OnboardingPage() {
     try {
       await saveProfileOnboarding(formData);
     } catch {
-      // Fallback redirect if demo or error
-      window.location.href = '/dashboard';
+      // Catch next redirect or fallback to client router
+      router.push('/dashboard');
     }
   };
 
