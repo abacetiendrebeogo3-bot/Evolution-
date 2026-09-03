@@ -2,7 +2,7 @@
 
 import { createClient } from '../lib/supabase/server';
 import { revalidatePath } from 'next/cache';
-import { HabitStatus } from '../types/habit';
+import { HabitStatus, Pillar } from '../types/habit';
 
 export async function createHabit(formData: FormData) {
   const supabase = createClient();
@@ -14,6 +14,7 @@ export async function createHabit(formData: FormData) {
 
   const name = formData.get('name') as string;
   const why = formData.get('why') as string;
+  const pillar = (formData.get('pillar') as Pillar) || 'corps';
   const triggerText = formData.get('trigger_text') as string;
   const actionText = formData.get('action_text') as string;
   const moment = (formData.get('moment') as string) || 'matin';
@@ -29,6 +30,7 @@ export async function createHabit(formData: FormData) {
     user_id: user.id,
     name,
     why,
+    pillar,
     trigger_text: triggerText,
     action_text: actionText,
     moment,

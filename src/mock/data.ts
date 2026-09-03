@@ -1,4 +1,4 @@
-import { Routine, UserStats, DailyQuote } from '../types/habit';
+import { Routine, UserStats, DailyQuote, PillarStats } from '../types/habit';
 
 export const INITIAL_USER_STATS: UserStats = {
   currentStreak: 12,
@@ -7,6 +7,41 @@ export const INITIAL_USER_STATS: UserStats = {
   completedTodayCount: 5,
   totalHabitsCount: 16,
 };
+
+export const INITIAL_PILLAR_STATS: PillarStats[] = [
+  {
+    pillar: 'corps',
+    name: 'CORPS',
+    icon: 'Activity',
+    completedCount: 4,
+    totalCount: 5,
+    percentage: 80,
+  },
+  {
+    pillar: 'esprit',
+    name: 'ESPRIT',
+    icon: 'Wind',
+    completedCount: 1,
+    totalCount: 4,
+    percentage: 25,
+  },
+  {
+    pillar: 'travail',
+    name: 'TRAVAIL',
+    icon: 'Briefcase',
+    completedCount: 1,
+    totalCount: 4,
+    percentage: 25,
+  },
+  {
+    pillar: 'relations',
+    name: 'RELATIONS',
+    icon: 'Users',
+    completedCount: 0,
+    totalCount: 3,
+    percentage: 0,
+  },
+];
 
 export const INITIAL_ROUTINES: Routine[] = [
   {
@@ -24,6 +59,8 @@ export const INITIAL_ROUTINES: Routine[] = [
         status: 'done',
         iconName: 'Droplet',
         streakCount: 14,
+        pillar: 'corps',
+        why: 'Réhydrater immédiatement mon corps et éveiller mon métabolisme.',
         minimumModeLabel: 'Quelques gorgées',
       },
       {
@@ -35,6 +72,8 @@ export const INITIAL_ROUTINES: Routine[] = [
         status: 'done',
         iconName: 'Activity',
         streakCount: 8,
+        pillar: 'corps',
+        why: 'Forger une énergie maximale et développer ma discipline physique.',
         minimumModeLabel: '10 pompes / 5 min étirement',
       },
       {
@@ -45,6 +84,8 @@ export const INITIAL_ROUTINES: Routine[] = [
         status: 'done',
         iconName: 'Home',
         streakCount: 12,
+        pillar: 'travail',
+        why: 'Un espace ordonné crée un esprit clair et concentré.',
         minimumModeLabel: 'Ranger le bureau 1 min',
       },
       {
@@ -55,6 +96,8 @@ export const INITIAL_ROUTINES: Routine[] = [
         status: 'done',
         iconName: 'ShowerHead',
         streakCount: 20,
+        pillar: 'corps',
+        why: 'Activer la circulation et marquer la transition vers l\'action.',
         minimumModeLabel: 'Douche rapide',
       },
       {
@@ -66,6 +109,8 @@ export const INITIAL_ROUTINES: Routine[] = [
         status: 'done',
         iconName: 'UserCheck',
         streakCount: 12,
+        pillar: 'esprit',
+        why: 'Calmer mon mental pour prendre des décisions lucides toute la journée.',
         minimumModeLabel: '1 min de respiration consciente',
       },
       {
@@ -76,6 +121,8 @@ export const INITIAL_ROUTINES: Routine[] = [
         status: 'todo',
         iconName: 'ListTodo',
         streakCount: 5,
+        pillar: 'travail',
+        why: 'Ne pas réagir aux urgences des autres mais exécuter mes vraies priorités.',
         minimumModeLabel: 'Noter 1 seule tâche principale',
       },
     ],
@@ -98,6 +145,8 @@ export const INITIAL_ROUTINES: Routine[] = [
         status: 'todo',
         iconName: 'BookOpen',
         streakCount: 9,
+        pillar: 'esprit',
+        why: 'Nourrir mon esprit avec des connaissances de grande valeur.',
       },
       {
         id: 'h-8',
@@ -107,6 +156,8 @@ export const INITIAL_ROUTINES: Routine[] = [
         status: 'todo',
         iconName: 'Utensils',
         streakCount: 15,
+        pillar: 'corps',
+        why: 'Prendre soin de ma digestion sans écrans ni distractions.',
         minimumModeLabel: 'Pas d\'écran pendant 5 min',
       },
       {
@@ -117,6 +168,8 @@ export const INITIAL_ROUTINES: Routine[] = [
         status: 'todo',
         iconName: 'Users',
         streakCount: 3,
+        pillar: 'relations',
+        why: 'Entretenir avec intention mes relations clés.',
         minimumModeLabel: 'Un simple message vocal',
       },
       {
@@ -128,6 +181,8 @@ export const INITIAL_ROUTINES: Routine[] = [
         status: 'minimum_mode',
         iconName: 'Briefcase',
         streakCount: 11,
+        pillar: 'travail',
+        why: 'Créer de la valeur à fort impact sans interruption.',
         minimumModeLabel: '25 min de Pomodoro',
       },
       {
@@ -138,6 +193,8 @@ export const INITIAL_ROUTINES: Routine[] = [
         status: 'todo',
         iconName: 'Footprints',
         streakCount: 6,
+        pillar: 'corps',
+        why: 'Aérer mon esprit et éviter la sédentarité prolongée.',
         minimumModeLabel: 'Tour du pâté de maisons',
       },
     ],
@@ -157,6 +214,8 @@ export const INITIAL_ROUTINES: Routine[] = [
         status: 'todo',
         iconName: 'Accessibility',
         streakCount: 7,
+        pillar: 'corps',
+        why: 'Relâcher les tensions musculaires accumulées.',
         minimumModeLabel: '2 min de soutien lombaire',
       },
       {
@@ -167,6 +226,8 @@ export const INITIAL_ROUTINES: Routine[] = [
         status: 'todo',
         iconName: 'Wind',
         streakCount: 14,
+        pillar: 'esprit',
+        why: 'Apaiser le système nerveux pour un sommeil réparateur.',
         minimumModeLabel: '3 respirations profondes',
       },
       {
@@ -177,6 +238,8 @@ export const INITIAL_ROUTINES: Routine[] = [
         status: 'todo',
         iconName: 'BookMarked',
         streakCount: 18,
+        pillar: 'esprit',
+        why: 'Remplacer la lumière bleue des écrans par du calme.',
         minimumModeLabel: '1 page de roman',
       },
       {
@@ -187,6 +250,8 @@ export const INITIAL_ROUTINES: Routine[] = [
         status: 'todo',
         iconName: 'Tv',
         streakCount: 4,
+        pillar: 'esprit',
+        why: 'Élargir mes horizons créatifs.',
         minimumModeLabel: '5 min de podcast audio',
       },
       {
@@ -197,6 +262,8 @@ export const INITIAL_ROUTINES: Routine[] = [
         status: 'todo',
         iconName: 'MoonStar',
         streakCount: 22,
+        pillar: 'corps',
+        why: 'Garantir un réveil en pleine forme demain.',
         minimumModeLabel: 'Éteindre les lumières principales',
       },
     ],
