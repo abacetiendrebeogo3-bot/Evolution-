@@ -4,10 +4,14 @@ import React from 'react';
 import { Calendar, ChevronDown, Menu } from 'lucide-react';
 
 interface HeaderProps {
+  displayName?: string;
   onOpenMobileSidebar: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onOpenMobileSidebar }) => {
+export const Header: React.FC<HeaderProps> = ({
+  displayName = 'Entrepreneur',
+  onOpenMobileSidebar,
+}) => {
   return (
     <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pt-2">
       <div className="flex items-center gap-3">
@@ -21,7 +25,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenMobileSidebar }) => {
 
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold font-sans text-white tracking-tight">
-            Bonjour, Entrepreneur.
+            Bonjour, {displayName}.
           </h1>
           <p className="text-sm text-gray-400 mt-1 font-sans">
             Chaque action compte. Reste constant.
@@ -33,7 +37,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenMobileSidebar }) => {
       <div className="flex items-center gap-3 self-start sm:self-auto">
         <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-card/60 border border-card-border text-xs font-mono text-gray-300">
           <Calendar className="w-4 h-4 text-gold-400" />
-          <span>22 Mai 2026</span>
+          <span>3 Septembre 2026</span>
         </div>
 
         <button className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-card hover:bg-card-hover border border-card-border text-xs font-medium text-white transition-colors">

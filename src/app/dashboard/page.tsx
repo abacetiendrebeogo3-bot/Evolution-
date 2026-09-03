@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Sidebar } from '../../components/layout/Sidebar';
 import { Header } from '../../components/layout/Header';
 import { NextActionCard } from '../../components/dashboard/NextActionCard';
@@ -15,15 +15,32 @@ import {
   DAILY_QUOTE,
 } from '../../mock/data';
 import { HabitStatus, Routine, Habit } from '../../types/habit';
+import { getDashboardData, logHabit } from '../../actions/habits';
 
 export default function DashboardPage() {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [displayName, setDisplayName] = useState('Entrepreneur');
   const [routines, setRoutines] = useState<Routine[]>(INITIAL_ROUTINES);
   const [stats, setStats] = useState(INITIAL_USER_STATS);
   const [pillarStats, setPillarStats] = useState(INITIAL_PILLAR_STATS);
 
-  // Recalculate stats dynamically based on routines state
-  const handleStatusChange = (habitId: string, newStatus: HabitStatus) => {
+  // Load real Supabase data on mount
+  useEffect(() => {
+    async function loadData() {
+      const data = await getDashboardData();
+      if (data) {
+        if (data.displayName) setDisplayName(data.displayName);
+        if (data.routines) setRoutines(data.routines);
+        if (data.stats) setStats(data.stats);
+        if (data.pillarStats) setPillarStats(data.pillarStats);
+      }
+    }
+    loadData();
+  }, []);
+
+  // Update status dynamically and persist to Supabase via Server Action
+  const handleStatusChange = async (habitId: string, newStatus: HabitStatus) => {
+    // 1. Optimistic UI update
     setRoutines((prevRoutines) => {
       const updatedRoutines = prevRoutines.map((routine) => ({
         ...routine,
@@ -50,13 +67,13 @@ export default function DashboardPage() {
       ).length;
 
       // Calculate dynamic success rate percentage
-      const rate = Math.round((completedCount / totalCount) * 100);
+      const rate = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
 
       setStats((prevStats) => ({
         ...prevStats,
         completedTodayCount: completedCount,
         totalHabitsCount: totalCount,
-        weeklySuccessRate: Math.max(75, Math.min(98, 70 + Math.round(rate * 0.25))),
+        weeklySuccessRate: rate,
       }));
 
       // Recalculate Pillar Stats dynamically
@@ -78,6 +95,9 @@ export default function DashboardPage() {
 
       return updatedRoutines;
     });
+
+    // 2. Persist in Supabase DB via Server Action
+    await logHabit(habitId, newStatus);
   };
 
   // Find the next upcoming uncompleted habit for the NEXT ACTION Hero Card
@@ -97,7 +117,10 @@ export default function DashboardPage() {
       <div className="flex-1 md:pl-64 flex flex-col min-w-0">
         <main className="flex-1 p-4 sm:p-6 md:p-8 max-w-7xl mx-auto w-full space-y-6">
           {/* Top Header */}
-          <Header onOpenMobileSidebar={() => setMobileSidebarOpen(true)} />
+          <Header
+            displayName={displayName}
+            onOpenMobileSidebar={() => setMobileSidebarOpen(true)}
+          />
 
           {/* 1. HERO SECTION: PROCHAINE ACTION ("Qu'est-ce que je dois faire maintenant ?") */}
           <NextActionCard
